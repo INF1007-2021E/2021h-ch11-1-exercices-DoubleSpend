@@ -45,7 +45,7 @@ def deal_damage(attacker, defender):
 	modifier = crit * rng
 	if random.randint(10,25) < defender.skill:
 		damage = 0
-		print(defender.name+" parries "+attacker.name+ ".")
+		print(defender.name+" parries "+attacker.name+" and ripostes!")
 		print("\n")
 	else:
 		damage = int(((((2*attacker.level/5)+2)*attacker.weapon.damage*(attacker.attack/defender.defense))/50)+2)*modifier
@@ -56,21 +56,34 @@ def deal_damage(attacker, defender):
 	return defender.hp_left, damage
 
 def run_battle(c1, c2):
-	parries = []
-	c =0
-	while c2.hp_left > 0:
-		if c1.hp_left > 0:
-
-			deal_damage(c2,c1)
-			deal_damage(c1, c2)
-			c+=1
-			time.sleep(1)
-			if c2.hp_left <= 0:
-				print(c2.name+" lost the duel in "+str(c)+" exchanges")
-				break
-			if c1.hp_left <= 0:
-				print(c1.name + " lost the duel in " + str(c) + " exchanges")
-				break
+	print("Ronguat: I am not biased towards Ren at all. Let's start this duel! \n")
+	c=0
+	if random.randint(1,2) ==1:
+		while c1.hp_left >=0:
+			if c2.hp_left >= 0:
+				deal_damage(c1,c2)
+				deal_damage(c2,c1)
+				c+=1
+				time.sleep(1)
+				if c1.hp_left <= 0:
+					print(c1.name + " died in " + str(c) + " turns")
+					break
+				elif c2.hp_left <= 0:
+					print(c2.name + " died in " + str(c) + " turns")
+					break
+	else:
+		while c1.hp_left > 0 or c2.hp_left > 0:
+			if c2.hp_left >= 0:
+				deal_damage(c2,c1)
+				deal_damage(c1,c2)
+				c+=1
+				time.sleep(5)
+				if c1.hp_left <= 0:
+					print(c1.name + " died in " + str(c) + " turns")
+					break
+				elif c2.hp_left <= 0:
+					print(c2.name + " died in " + str(c) + " turns")
+					break
 
 if __name__ == "__main__":
 	run_battle(ren,morning)
